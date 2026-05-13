@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Clock, FileText, Trash2, Eye, Search as SearchIcon, UploadCloud } from 'lucide-react';
 import { getHistory, deleteAnalysis } from '../utils/storage';
@@ -14,7 +15,7 @@ function SummaryModal({ item, onClose }) {
   const { summary = {}, chunk_analyses = [], timeline = [], total_logs, errors, warnings, info } = item;
   const [tab, setTab] = useState('overview');
 
-  return (
+  return createPortal(
     <div className="modal-bg" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="modal-box">
         <button className="modal-close" onClick={onClose}>&times;</button>
@@ -92,7 +93,8 @@ function SummaryModal({ item, onClose }) {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
