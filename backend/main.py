@@ -12,7 +12,8 @@ load_dotenv()
 
 app = FastAPI(title="AI Log Analyzer", version="1.0.0")
 
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000")
+ALLOWED_ORIGINS = ["*"] if _origins_env == "*" else _origins_env.split(",")
 
 app.add_middleware(
     CORSMiddleware,
